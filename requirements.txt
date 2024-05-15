@@ -1,0 +1,6 @@
+requests==2.31.0
+click==8.1.7
+urllib3==2.2.1
+flask==3.0.3
+Flask-Cors==4.0.1
+PyYAML==6.0.1
