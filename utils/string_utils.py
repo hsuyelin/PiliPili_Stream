@@ -57,7 +57,7 @@ class StringUtils:
                 '@': '%40',
                 '\\': '%5C',
                 '|': '%7C',
-		'！': '%EF%BC%81'
+		        '！': '%EF%BC%81'
             }
 
             uncleaned_part = match.group(1)

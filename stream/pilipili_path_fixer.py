@@ -15,9 +15,13 @@ from utils.string_utils import StringUtils
 class PiliPiliPathFixer(BasePathFixer):
 
     def fix(self) -> Tuple[str, bool]:
-        # 隐去PliPili Path Fixer实现
-        return "", False
+        """
+        省略了PiliPili Path fix实现
+        """
+        return self.original_stream_url, True
 
     def get_stream_url(self) -> str:
-        # 隐去PliPili 获取流地址实现
-        return ""
+        """
+        省略了PiliPili get stream url实现
+        """
+        return self.original_stream_url

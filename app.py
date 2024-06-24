@@ -22,7 +22,9 @@ def get_stream():
         emby_url=Config().emby_url,
         emby_api_key=Config().emby_api_key,
         backend_url=Config().backend_url,
-        backend_token=Config().backend_token
+        backend_token=Config().backend_token,
+        alist_url=Config().alist_url,
+        alist_api_key=Config().alist_api_key
     )
 
 

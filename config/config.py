@@ -5,6 +5,7 @@
 
 from os import path, remove, makedirs
 from utils.commons import singleton
+from utils.types import RedirectMode
 
 import yaml
 
@@ -73,7 +74,9 @@ class Config:
         """
         if not self.ua_allow_list and not self.web_ua_allow_list:
             return True
-        if "infuse" in user_agent and "direct" not in user_agent:
+        if "infuse" in user_agent.lower() and "direct" not in user_agent.lower():
+            return False
+        if "afuse"  in user_agent.lower():
             return False
         return (self.is_user_agent_allowed(user_agent, self.ua_allow_list) or
                 self.is_user_agent_allowed(user_agent, self.web_ua_allow_list))

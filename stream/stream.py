@@ -11,7 +11,9 @@ from api.emby import EmbyApi
 from config.config import Config
 from utils.commons import singleton
 from utils.date_utils import DateUtils
+from utils.types import RedirectMode
 from .pilipili_path_fixer import PiliPiliPathFixer
+from .alist_path_fixer import AlistPathFixer
 
 
 # noinspection SpellCheckingInspection
@@ -22,9 +24,22 @@ class Stream:
     __emby_api_key = None
     __backend_url = None
     __backend_token = None
+    __alist_url = None
+    __alist_api_key = None
     __emby_api = None
+    __alist_api = None
 
-    def __init__(self, emby_url, emby_api_key, backend_url, backend_token):
+    __redirect_mode = RedirectMode.MISAKA
+
+    def __init__(
+        self, 
+        emby_url, 
+        emby_api_key, 
+        backend_url, 
+        backend_token, 
+        alist_url, 
+        alist_api_key
+    ):
         """
         初始化 Stream 对象
         """
@@ -33,6 +48,11 @@ class Stream:
         self.__backend_url = backend_url
         self.__backend_token = backend_token
         self.__emby_api = EmbyApi(emby_url, emby_api_key)
+        self.__redirect_mode = RedirectMode.MISAKA
+        if alist_url and alist_api_key:
+            self.__alist_url = alist_url
+            self.__alist_api_key = alist_api_key
+            self.__redirect_mode = RedirectMode.ALIST
 
     def redirect_internal(self, url, item_id, media_source_id, api_key):
         logger.info(f"[{item_id}] -> 开始处理推流请求，当前参数: {self.to_json()}")
@@ -62,10 +82,33 @@ class Stream:
             emby_path = Config().september_18th_incident_stream_path
 
         if not emby_path:
+            logger.info(f"[{item_id}] -> 未获取到 EmbyPath")
             return redirect(Config().forbidden_ua_stream_path)
 
-        path_fixer = PiliPiliPathFixer(url, self.__backend_url, self.__backend_token, emby_path, media_source_id)
-        logger.info(f"[{item_id}] -> 推流后端URL：{self.__backend_url} -> 推流后端Token：{self.__backend_token}")
+        logger.info(f"[{item_id}] -> EmbyPath -> {emby_path}")
+
+        if self.__redirect_mode == RedirectMode.MISAKA:
+            path_fixer = PiliPiliPathFixer(
+                url, 
+                self.__backend_url, 
+                self.__backend_token,
+                None,
+                None,
+                emby_path, 
+                media_source_id
+            )
+            logger.info(f"[{item_id}] -> 推流后端URL：{self.__backend_url} -> 推流后端Token：{self.__backend_token}")
+        else:
+            path_fixer = AlistPathFixer(
+                url, 
+                None, 
+                None,
+                self.__alist_url,
+                self.__alist_api_key,
+                emby_path, 
+                None
+            )
+            logger.info(f"[{item_id}] -> EmbyPath -> {emby_path} -> 推流后端URL：{self.__alist_url} -> 推流后端Token：{self.__alist_api_key}")
 
         stream_url = path_fixer.get_stream_url()
         logger.info(f"[{item_id}] -> 推流URL：{stream_url}\n\n")
@@ -73,8 +116,10 @@ class Stream:
 
     def to_json(self):
         return {
-            "emby_url": self.__emby_url,
-            "emby_api_key": self.__emby_api_key,
-            "backend_url": self.__backend_url,
-            "backend_token": self.__backend_token
+            "emby_url": self.__emby_url or "",
+            "emby_api_key": self.__emby_api_key or "",
+            "backend_url": self.__backend_url or "",
+            "backend_token": self.__backend_token or "",
+            "alist_url": self.__alist_url or "",
+            "alist_api_key": self.__alist_api_key or ""
         }

@@ -16,3 +16,15 @@ class HttpMethod(Enum):
     """
     GET = 'GET'
     POST = 'POST'
+
+
+class RedirectMode(Enum):
+    """
+    推流重定向模式枚举
+
+    Attributes:
+    - GET (str): GET请求类型
+    - POST (str): POST请求类型
+    """
+    MISAKA = 'MISAKA'
+    ALIST = 'ALIST'

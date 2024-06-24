@@ -1,18 +1,19 @@
 # noinspection SpellCheckingInspection
 app:
   log_level: DEBUG
-  emby_url: http://127.0.0.1:8096
+  emby_url: 
   emby_api_key: 
   backend_url: 
   backend_token: 
-  alist_url:
-  alist_api_key:
+  alist_url: 
+  alist_api_key: 
   ua_allow_list:
     - Tsukimi
     - Yamby
     - Emby
     - infuse-direct
     - iemc
+    - xfuse
     - PotPlayer
     - libmpv
     - mpv
@@ -29,9 +30,10 @@ app:
     - nPlayer
     - XstarPlayer
     - AppleCoreMedia
+    - GStreamer
   web_ua_allow_list:
     - Mozilla
     - Opera
-  national_memorial_day_stream_path: 
-  september_18th_incident_stream_path: 
-  forbidden_ua_stream_path: 
+  national_memorial_day_stream_path:
+  september_18th_incident_stream_path:
+  forbidden_ua_stream_path:
