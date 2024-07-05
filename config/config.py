@@ -76,7 +76,7 @@ class Config:
             return True
         if "infuse" in user_agent.lower() and "direct" not in user_agent.lower():
             return False
-        if "afuse"  in user_agent.lower():
+        if "afuse" in user_agent.lower():
             return False
         return (self.is_user_agent_allowed(user_agent, self.ua_allow_list) or
                 self.is_user_agent_allowed(user_agent, self.web_ua_allow_list))

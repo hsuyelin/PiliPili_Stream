@@ -49,7 +49,7 @@ class LoggerManager:
         console_handler.setFormatter(console_formatter)
         __logger.addHandler(console_handler)
 
-        文件日志
+        # 文件日志
         file_handler = RotatingFileHandler(filename=log_file_path,
                                            mode='w',
                                            maxBytes=50 * 1024 * 1024,

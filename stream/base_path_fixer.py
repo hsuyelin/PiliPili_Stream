@@ -8,6 +8,7 @@ from typing import Tuple
 
 # noinspection SpellCheckingInspection
 class BasePathFixer:
+
     original_stream_url = None
     backend_url = None
     backend_token = None

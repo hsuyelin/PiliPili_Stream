@@ -69,17 +69,20 @@ class Stream:
             logger.info(
                 f"[{item_id}] -> 当前UA不被允许，播放PiliPili Sorry -> {Config().forbidden_ua_stream_path}"
             )
-            emby_path = Config().forbidden_ua_stream_path
+            emby_path = Config().forbidden_ua_stream_path if\
+                Config().forbidden_ua_stream_path else emby_path
         if DateUtils.is_today_national_memorial_day():
             logger.info(
                 f"[{item_id}] -> 当前为国家公祭日时间，播放爱国主义教育视频 -> {Config().national_memorial_day_stream_path}"
             )
-            emby_path = Config().national_memorial_day_stream_path
+            emby_path = Config().national_memorial_day_stream_path if\
+                Config().national_memorial_day_stream_path else emby_path
         if DateUtils.is_today_september_18th_incident():
             logger.info(
                 f"[{item_id}] -> 当前为9·18纪念日时间，播放爱国主义教育视频 -> {Config().september_18th_incident_stream_path}"
             )
-            emby_path = Config().september_18th_incident_stream_path
+            emby_path = Config().september_18th_incident_stream_path if\
+                Config().september_18th_incident_stream_path else emby_path
 
         if not emby_path:
             logger.info(f"[{item_id}] -> 未获取到 EmbyPath")
@@ -108,7 +111,8 @@ class Stream:
                 emby_path, 
                 None
             )
-            logger.info(f"[{item_id}] -> EmbyPath -> {emby_path} -> 推流后端URL：{self.__alist_url} -> 推流后端Token：{self.__alist_api_key}")
+            logger.info(f"[{item_id}] -> EmbyPath -> {emby_path} -> "
+                        f"推流后端URL：{self.__alist_url} -> 推流后端Token：{self.__alist_api_key}")
 
         stream_url = path_fixer.get_stream_url()
         logger.info(f"[{item_id}] -> 推流URL：{stream_url}\n\n")
